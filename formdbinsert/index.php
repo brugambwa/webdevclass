@@ -4,14 +4,15 @@
  */
 include('formfunctions.php');
 
-if (isset($_POST['fname']) && isset($_POST['lname'])) {
-    $firstname = $_POST['fname'];
-    $lastname = $_POST['lname'];
+if (isset($_POST['fullname']) && isset($_POST['emailaddress'])) {
+    $fullname = $_POST['fullname'];
+    $email = $_POST['emailaddress'];
     $username = $_POST['username'];
     $password = $_POST['password'];
-    $confirmpass = $_POST['confirmpass'];
 
-    SignUp2($firstname, $lastname, $username, $password);
+    //Use one of the two functions. Comment out other before running script.
+    RegisterClientByPDO($fullname, $email, $username, $password);
+    //RegisterClient($fullname, $emailaddress, $username, $password);
 }
 ?>
 
@@ -31,10 +32,10 @@ if (isset($_POST['fname']) && isset($_POST['lname'])) {
         <div class="container">
             <div class="row">
                 <div class="col-sm">
-                    <form>
+                    <form method="POST" action="index.php">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Full Name:</label>
-                            <input type="text" name="fullname" class="form-control" id="exampleInputEmail1"placeholder="Enter email">
+                            <input type="text" name="fullname" class="form-control" id="exampleInputEmail1"placeholder="Enter Full Name">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">Email Address:</label>

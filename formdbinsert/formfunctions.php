@@ -1,18 +1,15 @@
 <?php
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 require_once 'dbconnect.php';
 
 //Prep for DB Connection:
 $dbhost = "localhost";
 $dbuser = "root";
 $dbpass = "";
-$dbname = "";
+$dbname = "class_webdev_project";
+
+/*
+ * This function Uses PDO driver to insert data into the DB.
+ */
 
 function RegisterClientByPDO($fullname, $emailaddress, $username, $password) {
     $conn = PDODBConnect($GLOBALS['dbhost'], $GLOBALS['dbuser'], $GLOBALS['dbpass'], $GLOBALS['dbname']);
@@ -20,15 +17,18 @@ function RegisterClientByPDO($fullname, $emailaddress, $username, $password) {
     $query = "INSERT INTO cp_users (full_name, email_address, username, password) "
             . "VALUES(?, ?, ?, ?)";
     $statement = $conn->prepare($query);
-    $statement->bind($fullname, $emailaddress, $username, $hashedpassword);
-    $result = $statement->execute();
+    $result = $statement->execute([$fullname, $emailaddress, $username, $hashedpassword]);
 
     if ($result) {
         echo "Successfully Inserted";
     } else {
-        echo "Could not insert record! ";
+        echo "Could not insert record!";
     }
 }
+
+/*
+ * This function Uses Standard MYSQLi driver to insert data into the DB.
+ */
 
 function RegisterClient($fullname, $emailaddress, $username, $password) {
     $conn = DBConnect($GLOBALS['dbhost'], $GLOBALS['dbuser'], $GLOBALS['dbpass'], $GLOBALS['dbname']);
@@ -41,7 +41,7 @@ function RegisterClient($fullname, $emailaddress, $username, $password) {
     if ($result) {
         echo "Successfully Inserted";
     } else {
-        echo "Could not insert record! " . mysqli_error($GLOBALS['dbconn']);
+        echo "Could not insert record! " . mysqli_error($conn);
     }
 }
 
